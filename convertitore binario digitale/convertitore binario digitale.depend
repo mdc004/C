@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1612086632 source:c:\users\mattia\desktop\c\lezione\convertitore binario digitale\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+

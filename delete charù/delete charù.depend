@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1611821640 source:c:\users\mattia\desktop\c\lezione\delete charù\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

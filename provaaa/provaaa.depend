@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1621862775 source:d:\linguaggi\c\file\provaaa\main.c
+	<stdio.h>
+	<stdlib.h>
+
