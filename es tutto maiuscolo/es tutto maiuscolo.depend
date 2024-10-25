@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1612953187 source:c:\users\mattia\desktop\c\lezione\es tutto maiuscolo\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
