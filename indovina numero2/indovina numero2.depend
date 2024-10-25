@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1605203616 source:c:\users\matti\onedrive\desktop\c\indovina numero2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
+1605203721 source:c:\users\matti\onedrive\desktop\c\alla cavolo\indovina numero2\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
