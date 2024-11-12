@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1618567852 source:c:\users\mattia de capitani\onedrive\desktop\mattia\scuola\c\nome strano\cerca materia\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
