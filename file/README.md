@@ -34,6 +34,12 @@ I file di testo sono organizzati in righe, separate da appositi caratteri, che s
 - il C gestisce la differenza automaticamente (e sempre ‘\n')
 Nel seguito considereremo solo i file di testo
 
+In generale per gestire i file è necessario includere l'apposita libreria `stdio`
+
+```C
+    #include<stdio.h>
+```
+
 ### Apertura file
 
 Per usare un file occorre aprirlo specificando FILE *fopen(char *nomele, char *modo)
@@ -55,6 +61,11 @@ Aperto un file, la posizione accessibile è
 - il principio del file se si è aperto il file in lettura o scrittura
 - la fine del file se si è aperto il file in accodamento
 
+```C
+    FILE *fr = fopen("input.txt", "r");
+    FILE *fw = fopen(output.txt", "w");
+```
+
 ### Chiusura di un file
 
 Dopo l'uso, il file va chiuso con l'istruzione int fclose(FILE *stream) che restituisce
@@ -62,6 +73,10 @@ Dopo l'uso, il file va chiuso con l'istruzione int fclose(FILE *stream) che rest
 • la costante simbolica EOF altrimenti
 Si possono usare puntatori diversi per lo stesso file al fine di scorrerlo in maniera differenziata (non ha senso farlo in scrittura)
 La funzione void rewind(FILE* stream)  riporta la posizione corrente al principio del file
+
+```C
+    fclose(fr);
+```
 
 ### Parsing di stream
 
