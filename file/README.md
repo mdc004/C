@@ -302,3 +302,98 @@ fwrite(numbers, sizeof(int), 5, filePointer);
 int readNumbers[5];
 fread(readNumbers, sizeof(int), 5, filePointer);
 ```
+
+## Esempio
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+void createFile() {
+    FILE *file = fopen("file.txt", "w");
+    if (file == NULL) {
+        printf("Error opening the file.\n");
+        return;
+    }
+    printf("Enter text to write into the file (end with EOF):\n");
+    char c;
+    while ((c = getchar()) != EOF) {
+        fputc(c, file);
+    }
+    fclose(file);
+    printf("File created and written successfully.\n");
+}
+
+void readFile() {
+    FILE *file = fopen("file.txt", "r");
+    if (file == NULL) {
+        printf("Error opening the file.\n");
+        return;
+    }
+    printf("File contents:\n");
+    char c;
+    while ((c = fgetc(file)) != EOF) {
+        putchar(c);
+    }
+    fclose(file);
+}
+
+void appendFile() {
+    FILE *file = fopen("file.txt", "a"); // append mode
+    if (file == NULL) {
+        printf("Error opening the file.\n");
+        return;
+    }
+    printf("Enter text to append to the file (end with EOF):\n");
+    char c;
+    while ((c = getchar()) != EOF) {
+        fputc(c, file);
+    }
+    fclose(file);
+    printf("Text appended to the file successfully.\n");
+}
+
+void deleteFile() {
+    if (remove("file.txt") == 0) {
+        printf("File deleted successfully.\n");
+    } else {
+        printf("Error deleting the file.\n");
+    }
+}
+
+int main() {
+    int choice;
+    do {
+        printf("\nFile Management Menu:\n");
+        printf("1. Create a new file\n");
+        printf("2. Read the file\n");
+        printf("3. Append to the file\n");
+        printf("4. Delete the file\n");
+        printf("5. Exit\n");
+        printf("Choose an option (1-5): ");
+        scanf("%d", &choice);
+        getchar();  // to consume the newline character left by scanf
+
+        switch (choice) {
+            case 1:
+                createFile();
+                break;
+            case 2:
+                readFile();
+                break;
+            case 3:
+                appendFile();
+                break;
+            case 4:
+                deleteFile();
+                break;
+            case 5:
+                printf("Exiting the program...\n");
+                break;
+            default:
+                printf("Invalid choice! Please try again.\n");
+        }
+    } while (choice != 5);
+
+    return 0;
+}
+```
