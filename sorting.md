@@ -4,7 +4,7 @@
 - [Quick Sort](#)
 - [Counting Sort](#)
 - [Radix Sort](#)
-- [Bucket Sort](#)
+- [Bucket Sort](#bucket-sort)
 
 ## Insertion Sort
 ```pseudo
@@ -17,3 +17,5 @@ InsertionSort(A)
             j = j - 1
         A[j + 1] = current_element
 ```
+## Bucket Sort
+
