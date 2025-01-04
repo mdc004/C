@@ -1,6 +1,6 @@
 - [Insertion Sort](#insertion-sort)
 - [Merge Sort](#)
-- [Heap Sort](#)
+- [Heap Sort](#heap-sort)
 - [Quick Sort](#)
 - [Counting Sort](#)
 - [Radix Sort](#)
@@ -124,6 +124,142 @@ int main() {
     }
     printf("\n");
 
+    return 0;
+}
+```
+
+## Heap sort
+### Funzionamento
+Un array $A[1..n]$ può essere interpretato come albero binario (**heap**), dove:
+- $A[1]$ è la radice
+- $A[2i]$ e $A[2i+1]$ sono i figli di $A[i]$
+-  $A[floor(i / 2)]$ è il padre di $A[i]$
+
+La procedura di trasformazione di un array in uno heap viene definita `heapify`.
+
+#### Proprietà dello *heap*
+- **Max-Heap**: per ogni nodo i diverso dalla radice: $A[parent(i)] ≥ A[i]$. *ordinamento crescente*
+- **Min-Heap**: per ogni nodo i diverso dalla radice: $A[parent(i)] ≤ A[i]$. *ordinamento decrescente*
+
+Modifiche all’interno dell’array possono provocare la violazione della proprietà: `max-heapify` (e `min-heapify`) viene usata per ripristinare la proprietà.
+
+#### Procedura di ordinamento
+L'Heap Sort utilizza due fasi principali
+
+##### Costruzione del Max Heap
+Inizialmente, l'intero array viene trasformato in un Max Heap. Questa fase richiede la chiamata ripetuta della funzione max-heapify a partire dagli ultimi nodi interni fino alla radice.
+
+##### Ordinamento del Max Heap
+Una volta costruito il Max Heap, si procede a ordinare l'array. Si scambia l'elemento alla radice (il più grande) con l'ultimo elemento dell'heap. Questo riduce la dimensione dell'heap di uno.
+
+Si applica `max-heapify` alla nuova radice per ripristinare la proprietà del Max Heap.
+
+Questo processo si ripete fino a quando tutti gli elementi sono stati estratti e l'array è ordinato.
+
+### Pseudo Codice
+```pseudo
+HeapSort(A, n):
+    // Step 1: Costruire un max heap
+    BuildMaxHeap(A, n)
+
+    // Step 2: Estrarre un elemento per volta dall'heap
+    for i = n - 1 down to 1 do:
+        swap A[0] with A[i]   // Sposta l'elemento massimo corrente alla fine
+        MaxHeapify(A, i, 0)   // Chiama MaxHeapify sull'heap ridotto
+
+BuildMaxHeap(A, n):
+    // Costruire un max heap
+    for i = n/2 - 1 down to 0 do:
+        MaxHeapify(A, n, i)
+
+MaxHeapify(A, n, i):
+    largest = i              // Inizializza largest come radice
+    left = 2 * i + 1         // Sinistro = 2*i + 1
+    right = 2 * i + 2        // Destro = 2*i + 2
+
+    // Se il figlio sinistro è più grande della radice
+    if left < n and A[left] > A[largest]:
+        largest = left
+
+    // Se il figlio destro è più grande della radice
+    if right < n and A[right] > A[largest]:
+        largest = right
+
+    // Se largest non è la radice
+    if largest != i:
+        swap A[i] with A[largest]
+        MaxHeapify(A, n, largest) // Ricorsivamente heapify il sottoalbero interessato
+```
+### Complessità
+Ogni chiamata di `max-heapify` (o `min-heapify`) costa $O(\log(n))$, ci sono $O(n)$ chiamate, di conseguenza $O(n\log(n))$.
+
+### Codice C
+```C
+#include <stdio.h>
+
+// Funzione per mantenere la proprietà del max heap
+void MaxHeapify(int arr[], int n, int i) {
+    int largest = i; // Inizializza largest come radice
+    int left = 2 * i + 1; // Sinistro = 2*i + 1
+    int right = 2 * i + 2; // Destro = 2*i + 2
+
+    // Se il figlio sinistro è più grande della radice
+    if (left < n && arr[left] > arr[largest])
+        largest = left;
+
+    // Se il figlio destro è più grande della radice
+    if (right < n && arr[right] > arr[largest])
+        largest = right;
+
+    // Se largest non è la radice
+    if (largest != i) {
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+
+        // Ricorsivamente heapify il sottoalbero
+        MaxHeapify(arr, n, largest);
+    }
+}
+
+// Funzione per costruire un max heap
+void BuildMaxHeap(int arr[], int n) {
+    for (int i = n / 2 - 1; i >= 0; i--)
+        MaxHeapify(arr, n, i);
+}
+
+// Funzione di ordinamento Heapsort
+void HeapSort(int arr[], int n) {
+    // Step 1: Costruire un max heap
+    BuildMaxHeap(arr, n);
+
+    // Step 2: Estrarre un elemento per volta dall'heap
+    for (int i = n - 1; i > 0; i--) {
+        // Scambia la radice con l'ultimo elemento
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+
+        // Chiama MaxHeapify sull'heap ridotto
+        MaxHeapify(arr, i, 0);
+    }
+}
+
+// Funzione di utilità per stampare l'array
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; ++i)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {12, 11, 13, 5, 6, 7};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    HeapSort(arr, n);
+
+    printf("Array ordinato: \n");
+    printArray(arr, n);
     return 0;
 }
 ```
