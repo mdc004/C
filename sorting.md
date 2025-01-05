@@ -3,7 +3,7 @@
 - [Heap Sort](#heap-sort)
 - [Quick Sort](#)
 - [Counting Sort](#)
-- [Radix Sort](#)
+- [Radix Sort](#radix-sort)
 - [Bucket Sort](#bucket-sort)
 
 ## Insertion Sort
@@ -53,9 +53,6 @@ Per quanto riguarda la complessità si ha dove $Θ(n + k)$ dove k indica il nume
 
 ### Codice C
 ```C
-#include <stdio.h>
-#include <stdlib.h>
-
 // Definizione di una struttura per i nodi della lista
 struct Node {
     float data;
@@ -70,12 +67,6 @@ void insert(struct Node** list, float value) {
     *list = newNode;
 }
 
-// Funzione per ordinare una lista utilizzando l'Insertion Sort, per mantenere il contesto generale non si riporterà il codice dell'algoritmo
-void insertionSort(struct Node* list) {
-    return;
-}
-
-// Funzione Bucket Sort
 void bucketSort(float arr[], int n) {
     // Creare k secchi vuoti
     int k = 10; // Ad esempio, utilizziamo 10 secchi
@@ -109,22 +100,6 @@ void bucketSort(float arr[], int n) {
 
     // Liberare la memoria dei secchi
     free(buckets);
-}
-
-int main() {
-    // Esempio di utilizzo
-    float arr[] = {0.78, 0.17, 0.39, 0.26, 0.72, 0.94, 0.21, 0.12, 0.23, 0.68};
-    int n = sizeof(arr) / sizeof(arr[0]);
-
-    bucketSort(arr, n);
-
-    printf("Array ordinato:\n");
-    for (int i = 0; i < n; i++) {
-        printf("%f ", arr[i]);
-    }
-    printf("\n");
-
-    return 0;
 }
 ```
 
@@ -195,8 +170,6 @@ Ogni chiamata di `max-heapify` (o `min-heapify`) costa $O(\log(n))$, ci sono $O(
 
 ### Codice C
 ```C
-#include <stdio.h>
-
 // Funzione per mantenere la proprietà del max heap
 void MaxHeapify(int arr[], int n, int i) {
     int largest = i; // Inizializza largest come radice
@@ -244,22 +217,36 @@ void HeapSort(int arr[], int n) {
         MaxHeapify(arr, i, 0);
     }
 }
+```
 
-// Funzione di utilità per stampare l'array
-void printArray(int arr[], int n) {
-    for (int i = 0; i < n; ++i)
-        printf("%d ", arr[i]);
-    printf("\n");
-}
+## Radix sort
+### Funzionamento
+Assumiamo che i valori degli elementi dell’array siano interi rappresentabili con al più $d$ cifre in una certa base $b$.
 
-int main() {
-    int arr[] = {12, 11, 13, 5, 6, 7};
-    int n = sizeof(arr) / sizeof(arr[0]);
+Per ordinare l’array si usa d volte un algoritmo di ordinamento stabile (es., CountingSort) per ordinare l’array rispetto a ciascuna delle d cifre partendo dalla meno significativa.
 
-    HeapSort(arr, n);
+### Pseudo Codice
+```pseudo
+RadixSort(A, d)
+    for i = 1 to d do
+        // Usa un algoritmo di ordinamento stabile per ordinare l'array A sugli i-esimi cifre
+        CountingSort(A, i)
+```
 
-    printf("Array ordinato: \n");
-    printArray(arr, n);
-    return 0;
+### Complessità
+La complessità temporale dell'algoritmo di Radix Sort dipende dalla base di numerazione utilizzata e dall'algoritmo di ordinamento stabile impiegato (ad esempio, Counting Sort) per ogni cifra.
+
+La complessità temporale di Radix Sort è $O(d(n+k))$, dove:
+- $n$ è il numero di elementi nell'array
+- $d$ è il numero di cifre (o posizioni) massime negli elementi
+- $k$ è il valore massimo che una cifra può assumere (ad esempio, 10 per le cifre decimali)
+
+```C
+void radixSort(int arr[], int n) {
+    int max = getMax(arr, n); // Trova il valore massimo nell'array
+
+    // Esegui Counting Sort per ciascuna cifra del valore massimo
+    for (int digitPlace = 1; max / digitPlace > 0; digitPlace *= 10)
+        countingSort(arr, n, digitPlace);
 }
 ```
