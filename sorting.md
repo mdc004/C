@@ -264,22 +264,117 @@ void radixSort(int arr[], int n) {
 ```
 
 ## Quick sort
-### Funzionamento
-
+### [Funzionamento](https://youtu.be/Hoixgm4-P4M)
+1. **Scelta del pivot**: Scegli un elemento dall'array come pivot. Esistono vari metodi per scegliere il pivot, come scegliere l'elemento centrale, l'elemento iniziale, l'elemento finale o un elemento casuale.
+2. **Partizionamento**: Riordina l'array in modo che tutti gli elementi minori del pivot vengano prima di esso e tutti gli elementi maggiori vengano dopo di esso. Il pivot viene quindi posizionato nella sua posizione finale (quella a sinistra dei maggiori o a destra dei minori). Questa operazione è detta partizionamento.
+3. **Ricorsione**: Applica ricorsivamente il quicksort ai sotto-array di elementi a sinistra e a destra del pivot.
 
 ### Pseudo Codice
 ```pseudo
+quickSort(array, low, high):
+    if low < high:
+        // Trova la posizione del pivot
+        pivot_index = partition(array, low, high)
+        
+        // Ordina ricorsivamente i sotto-array
+        quickSort(array, low, pivot_index - 1)
+        quickSort(array, pivot_index + 1, high)
+
+partition(array, low, high):
+    // Scegli il pivot (qui scegliamo il primo elemento)
+    pivot = array[low]
+    
+    // Inizializza gli indici
+    left = low + 1
+    right = high
+    
+    // Partizionamento
+    while true:
+        // Trova un elemento maggiore o uguale al pivot da sinistra
+        while left <= right and array[left] < pivot:
+            left = left + 1
+        
+        // Trova un elemento minore o uguale al pivot da destra
+        while left <= right and array[right] > pivot:
+            right = right - 1
+        
+        // Se gli indici si incrociano, il partizionamento è completo
+        if left > right:
+            break
+        else:
+            // Scambia gli elementi trovati
+            swap(array, left, right)
+            left = left + 1
+            right = right - 1
+    
+    // Metti il pivot nella sua posizione finale
+    swap(array, low, right)
+    return right
+
+swap(array, i, j):
+    temp = array[i]
+    array[i] = array[j]
+    array[j] = temp
 
 ```
 
 ### Complessità
-
+Nel caso migliore è $\Theta(n\log n )$, nel peggiore $O(n^2)$
 
 ### Codice C
 ```C
+// Funzione per scambiare due elementi
+void swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
 
+// Funzione per partizionare l'array
+int partition(int array[], int low, int high) {
+    int pivot = array[low];
+    int left = low + 1;
+    int right = high;
+
+    while (1) {
+        // Trova un elemento maggiore o uguale al pivot da sinistra
+        while (left <= right && array[left] < pivot) {
+            left++;
+        }
+
+        // Trova un elemento minore o uguale al pivot da destra
+        while (left <= right && array[right] > pivot) {
+            right--;
+        }
+
+        // Se gli indici si incrociano, il partizionamento è completo
+        if (left > right) {
+            break;
+        }
+
+        // Scambia gli elementi trovati
+        swap(&array[left], &array[right]);
+        left++;
+        right--;
+    }
+
+    // Metti il pivot nella sua posizione finale
+    swap(&array[low], &array[right]);
+    return right;
+}
+
+// Funzione principale di Quicksort
+void quicksort(int array[], int low, int high) {
+    if (low < high) {
+        // Trova la posizione del pivot
+        int pivot_index = partition(array, low, high);
+
+        // Ordina ricorsivamente i sotto-array
+        quicksort(array, low, pivot_index - 1);
+        quicksort(array, pivot_index + 1, high);
+    }
+}
 ```
-
 
 ## Merge sort
 ### Funzionamento
