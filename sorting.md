@@ -1,12 +1,14 @@
 - [Insertion Sort](#insertion-sort)
-- [Merge Sort](#)
+- [Merge Sort](#merge-sort)
 - [Heap Sort](#heap-sort)
-- [Quick Sort](#)
-- [Counting Sort](#)
+- [Quick Sort](#quick-sort)
+- [Counting Sort](#counting-sort)
 - [Radix Sort](#radix-sort)
 - [Bucket Sort](#bucket-sort)
 
 ## Insertion Sort
+### Funzionamento
+### Pseudo Codice
 ```pseudo
 InsertionSort(A)
     for i = 2 to length(A)
@@ -17,6 +19,15 @@ InsertionSort(A)
             j = j - 1
         A[j + 1] = current_element
 ```
+
+### Complessità
+
+
+### Codice C
+```C
+
+```
+
 ## Bucket Sort
 ### Funzionamento
 Per ordinare un array $A[1..n]$, si divide l’intervallo in $k$ parti uguali e usa un array $B[0...k-1]$ di liste (i bucket), mettendo in $B[j]$ gli $A[i]$ che cadono nella j-esima parte dell’intervallo. 
@@ -241,6 +252,7 @@ La complessità temporale di Radix Sort è $O(d(n+k))$, dove:
 - $d$ è il numero di cifre (o posizioni) massime negli elementi
 - $k$ è il valore massimo che una cifra può assumere (ad esempio, 10 per le cifre decimali)
 
+### Codice C
 ```C
 void radixSort(int arr[], int n) {
     int max = getMax(arr, n); // Trova il valore massimo nell'array
@@ -249,4 +261,55 @@ void radixSort(int arr[], int n) {
     for (int digitPlace = 1; max / digitPlace > 0; digitPlace *= 10)
         countingSort(arr, n, digitPlace);
 }
+```
+
+## Quick sort
+### Funzionamento
+
+
+### Pseudo Codice
+```pseudo
+
+```
+
+### Complessità
+
+
+### Codice C
+```C
+
+```
+
+
+## Merge sort
+### Funzionamento
+
+
+### Pseudo Codice
+```pseudo
+
+```
+
+### Complessità
+
+
+### Codice C
+```C
+
+```
+
+## Counting sort
+### Funzionamento
+
+### Pseudo Codice
+```pseudo
+
+```
+
+### Complessità
+
+
+### Codice C
+```C
+
 ```
