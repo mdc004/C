@@ -393,18 +393,106 @@ void quicksort(int array[], int low, int high) {
 
 ```
 
-## Counting sort
+## [Counting sort](https://youtu.be/EItdcGhSLf4)
 ### Funzionamento
+Il Counting Sort è un algoritmo di ordinamento molto efficace per ordinare numeri interi entro un determinato intervallo. Funziona in questo modo:
+1. **Determinare** il valore massimo nell'array da ordinare per conoscere l'intervallo dei valori.
+2. **Creare un array di conteggio** (chiamato `countArray`) dove ogni indice rappresenta un valore nell'intervallo e ogni elemento memorizza il numero di occorrenze di quel valore nell'array originale.
+3. **Popolare l'array di conteggio** scorrendo l'array originale e incrementando il valore nell'array di conteggio corrispondente a ciascun valore.
+4. **Aggiornare l'array** di conteggio in modo che ogni elemento contenga la somma degli elementi precedenti, il che consente di determinare la posizione finale di ogni elemento.
+5. **Costruire l'array ordinato** scorrendo l'array originale all'indietro e inserendo ogni elemento nella sua posizione finale determinata dall'array di conteggio.
 
 ### Pseudo Codice
 ```pseudo
+CountingSort(array, n):
+    // Passo 1: Determina il valore massimo nell'array
+    max_val = trovaMax(array, n)
 
+    // Passo 2: Crea l'array di conteggio (countArray)
+    countArray = array di dimensione (max_val + 1) inizializzato a 0
+
+    // Passo 3: Popola l'array di conteggio
+    per i da 0 a n-1:
+        countArray[array[i]]++
+
+    // Passo 4: Aggiorna l'array di conteggio
+    per i da 1 a max_val:
+        countArray[i] += countArray[i - 1]
+
+    // Passo 5: Costruisce l'array ordinato
+    sortedArray = array di dimensione n
+    per i da n-1 a 0:
+        sortedArray[countArray[array[i]] - 1] = array[i]
+        countArray[array[i]]--
+
+    // Copia l'array ordinato nell'array originale
+    per i da 0 a n-1:
+        array[i] = sortedArray[i]
+
+trovaMax(array, n):
+    max = array[0]
+    per i da 1 a n-1:
+        se array[i] > max:
+            max = array[i]
+    ritorna max
 ```
 
 ### Complessità
+1. **Determinazione del valore massimo**: questo richiede scorrere l'array una volta, quindi ha una complessità di $O(n)$.
+2. **Creazione dell'array di conteggio**: la creazione dell'array di conteggio ha una complessità di $O(k)$, dove $k$ è il valore massimo nell'array.
+3. **Popolazione dell'array di conteggio**: scorrere l'array originale ha una complessità di $O(n)$.
+4. **Aggiornamento dell'array di conteggio**: questo passo richiede $O(k)$ operazioni.
+5. **Costruzione dell'array ordinato**: questo passo richiede di scorrere l'array originale e costruire il nuovo array ordinato, con una complessità di $O(n)$.
 
+In sintesi, la complessità temporale totale è $O(n+k)$, dove:
+- $n$ dove è il numero di elementi nell'array
+- $k$ è il valore massimo nell'array
 
 ### Codice C
 ```C
+#include <stdio.h>
+#include <stdlib.h>
 
+// Funzione per trovare il valore massimo nell'array
+int find_max(int arr[], int n) {
+    int max = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+// Funzione per eseguire il Counting Sort
+void counting_sort(int arr[], int n) {
+    int max_val = find_max(arr, n);
+    int* count_array = (int*)calloc(max_val + 1, sizeof(int));
+
+    // Popolare l'array di conteggio
+    for (int i = 0; i < n; i++) {
+        count_array[arr[i]]++;
+    }
+
+    // Aggiornare l'array di conteggio
+    for (int i = 1; i <= max_val; i++) {
+        count_array[i] += count_array[i - 1];
+    }
+
+    // Costruire l'array ordinato
+    int* sorted_array = (int*)malloc(n * sizeof(int));
+    for (int i = n - 1; i >= 0; i--) {
+        sorted_array[count_array[arr[i]] - 1] = arr[i];
+        count_array[arr[i]]--;
+    }
+
+    // Copiare l'array ordinato nell'array originale
+    for (int i = 0; i < n; i++) {
+        arr[i] = sorted_array[i];
+    }
+
+    // Liberare la memoria allocata
+    free(count_array);
+    free(sorted_array);
+}
 ```
