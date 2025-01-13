@@ -1,4 +1,4 @@
-- [Insertion Sort](#insertion-sort) *da fare*
+- [Insertion Sort](#insertion-sort)
 - [Merge Sort](#merge-sort) *da fare*
 - [Heap Sort](#heap-sort)
 - [Quick Sort](#quick-sort)
@@ -8,24 +8,45 @@
 
 ## Insertion Sort
 ### Funzionamento
+L'algoritmo considera che il primo elemento di un array sia già ordinato. Quindi, inizia dal secondo elemento:
+1. Il secondo elemento viene confrontato con gli elementi precedenti (da destra a sinistra) fino a trovare la sua posizione corretta e viene inserito in quella posizione.
+2. Si passa al terzo elemento e si ripete lo stesso processo, confrontandolo con tutti gli elementi precedenti finché non trova la sua posizione corretta.
+
 ### Pseudo Codice
 ```pseudo
-InsertionSort(A)
-    for i = 2 to length(A)
-        current_element = A[i]
+insertionSort(array)
+    per i da 1 a lunghezza(array) - 1
+        chiave = array[i]
         j = i - 1
-        while j >= 0 and A[j] > current_element
-            A[j + 1] = A[j]
+        
+        mentre j >= 0 e array[j] > chiave
+            array[j + 1] = array[j]
             j = j - 1
-        A[j + 1] = current_element
+        
+        array[j + 1] = chiave
 ```
 
 ### Complessità
-
+$O(n^2)$
 
 ### Codice C
 ```C
+#include <stdio.h>
 
+void insertionSort(int array[], int n) {
+    for (int i = 1; i < n; i++) {
+        int chiave = array[i];
+        int j = i - 1;
+
+        // Sposta gli elementi dell'array[0..i-1] che sono
+        // maggiori della chiave di una posizione avanti rispetto alla loro posizione attuale
+        while (j >= 0 && array[j] > chiave) {
+            array[j + 1] = array[j];
+            j = j - 1;
+        }
+        array[j + 1] = chiave;
+    }
+}
 ```
 
 ## Bucket Sort
