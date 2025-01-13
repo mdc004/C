@@ -1,5 +1,5 @@
 - [Insertion Sort](#insertion-sort)
-- [Merge Sort](#merge-sort) *da fare*
+- [Merge Sort](#merge-sort)
 - [Heap Sort](#heap-sort)
 - [Quick Sort](#quick-sort)
 - [Counting Sort](#counting-sort)
