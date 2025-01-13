@@ -399,15 +399,57 @@ void quicksort(int array[], int low, int high) {
 
 ## Merge sort
 ### Funzionamento
-
-
+Il merge sort è un algoritmo di ordinamento efficiente e stabile basato sul paradigma divide et impera.
+1. Suddivide l'array iniziale in due metà uguali (o quasi uguali) ricorsivamente fino a ottenere sotto-array di dimensione 1.
+2. Poiché gli array di dimensione 1 sono già ordinati, procede alla fase successiva.
+3. Unisce i sotto-array ordinati per formare un array ordinato finale.
 ### Pseudo Codice
 ```pseudo
+mergeSort(array, inizio, fine)
+    se inizio < fine
+        metà = (inizio + fine) / 2
+        mergeSort(array, inizio, metà)
+        mergeSort(array, metà + 1, fine)
+        merge(array, inizio, metà, fine)
 
+merge(array, inizio, metà, fine)
+    n1 = metà - inizio + 1
+    n2 = fine - metà
+    sinistra = array temporaneo di dimensione n1
+    destra = array temporaneo di dimensione n2
+    
+    per i da 0 a n1 - 1
+        sinistra[i] = array[inizio + i]
+    
+    per j da 0 a n2 - 1
+        destra[j] = array[metà + 1 + j]
+    
+    i = 0
+    j = 0
+    k = inizio
+    
+    mentre i < n1 e j < n2
+        se sinistra[i] <= destra[j]
+            array[k] = sinistra[i]
+            i = i + 1
+        altrimenti
+            array[k] = destra[j]
+            j = j + 1
+        k = k + 1
+    
+    mentre i < n1
+        array[k] = sinistra[i]
+        i = i + 1
+        k = k + 1
+    
+    mentre j < n2
+        array[k] = destra[j]
+        j = j + 1
+        k = k + 1
 ```
 
 ### Complessità
-
+$O(n\log(n))$
 
 ### Codice C
 ```C
